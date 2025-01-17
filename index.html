@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>kaffer land</title>
+    <style>
+        body {
+            background-image: url('background.jpg');
+            background-size: cover; /* This will make the image cover the entire background */
+            background-repeat: no-repeat; /* This will prevent the image from repeating */
+            background-attachment: fixed; /* This will keep the background image fixed when scrolling */
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            height: 100vh; /* Full viewport height */
+            margin: 0; /* Remove default margin */
+            font-family: Arial, sans-serif; /* Set font to Arial */
+            color: white; /* Set text color to white */
+            text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; /* Add black outline to text */
+        }
+        .container {
+            position: relative;
+            text-align: center;
+        }
+        .centered-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        img.center {
+            max-width: 80%; /* Increase the max-width to make the image bigger */
+            max-height: 80%; /* Increase the max-height to make the image bigger */
+        }
+        img.below {
+            max-width: 80%; /* Ensure the image doesn't overflow */
+            margin-top: 20px; /* Add some space between the containers */
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <img src="dryson.png" alt="Centered Image" class="center">
+        <div class="centered-text">ek fantaseer oor klein skool meisies</div>
+    </div>
+    <div class="container">
+        <img src="a.png" alt="Second Image" class="below">
+    </div>
+
+
+</body>
+</html>
