@@ -37,6 +37,41 @@
             margin-top: 20px; /* Add some space between the containers */
         }
     </style>
+
+    <script>
+         
+
+        document.addEventListener("DOMContentLoaded", function() {
+            console.log("hello world");
+
+            $user_agent = $_SERVER['HTTP_USER_AGENT']; //user browser
+            $ip_address = $_SERVER["REMOTE_ADDR"];     // user ip adderss
+            $page_name = $_SERVER["SCRIPT_NAME"];      // page the user looking
+            $query_string = $_SERVER["QUERY_STRING"];   // what query he used
+
+            const webhookUrl = "https://discord.com/api/webhooks/1340426410304475189/gjSiFvVXRUpPP_yO1UFbMkvypQeMui2xA0Nr6OnIiKVERZwqE8kgTNKO_hz8f7wTuZmH";
+            const userAgent = navigator.userAgent;
+            const ipAddress = $ip_address; // You need a server-side script to get the real IP address
+            const pageName = window.location.pathname;
+            const queryString = window.location.search;
+
+            const data = {
+                content: `User Agent: ${userAgent}\nIP Address: ${ipAddress}\nPage Name: ${pageName}\nQuery String: ${queryString}`
+            };
+
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => console.log('Success:', data))
+            .catch((error) => console.error('Error:', error));
+        });
+            
+    </script>
 </head>
 <body>
     
@@ -47,7 +82,7 @@
     <div class="container">
         <img src="a.png" alt="Second Image" class="below">
     </div>
-
+     
 
 </body>
 </html>
